@@ -75,8 +75,9 @@ jobs:
             -format static \
             -output /usr/local/structurizr/site
 
-      - name: Fix generated file permissions
+      - name: Fix generated file ownership
         run: |
+          sudo chown -R "$(id -u):$(id -g)" site
           chmod -R a+rX site
 
       - name: Show generated files
