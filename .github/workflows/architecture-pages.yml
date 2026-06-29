@@ -1,5 +1,6 @@
 name: Publish Architecture Site
 
+
 on:
   push:
     branches:
