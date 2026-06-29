@@ -1,6 +1,5 @@
 name: Publish Architecture Site
 
-
 on:
   push:
     branches:
@@ -34,9 +33,17 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v5
 
+      - name: Show repository files
+        run: |
+          echo "Repository root:"
+          pwd
+          echo "Files:"
+          find . -maxdepth 4 -type f -print
+
       - name: Validate workspace.dsl
         run: |
           docker run --rm \
+            --user root \
             -v "${{ github.workspace }}:/usr/local/structurizr" \
             structurizr/structurizr:latest \
             validate \
@@ -51,12 +58,16 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v5
 
-      - name: Export Structurizr static site
+      - name: Prepare output directory
         run: |
           rm -rf site
           mkdir -p site
+          chmod 777 site
 
+      - name: Export Structurizr static site
+        run: |
           docker run --rm \
+            --user root \
             -v "${{ github.workspace }}:/usr/local/structurizr" \
             structurizr/structurizr:latest \
             export \
@@ -67,7 +78,7 @@ jobs:
       - name: Show generated files
         run: |
           echo "Generated files:"
-          find site -maxdepth 4 -type f -print
+          find site -maxdepth 6 -type f -print
           echo "Site directory:"
           ls -la site
 
