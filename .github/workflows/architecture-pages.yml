@@ -3,13 +3,13 @@ name: Publish Architecture Site
 on:
   push:
     branches:
-      - main
+      - master
     paths:
       - "architecture/**"
       - ".github/workflows/architecture-pages.yml"
   pull_request:
     branches:
-      - main
+      - master
     paths:
       - "architecture/**"
       - ".github/workflows/architecture-pages.yml"
@@ -73,7 +73,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
 
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
 
     environment:
       name: github-pages
