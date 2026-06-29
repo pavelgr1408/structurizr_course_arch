@@ -39,7 +39,7 @@ jobs:
             -v "${{ github.workspace }}:/usr/local/structurizr" \
             structurizr/cli:latest \
             validate \
-            -workspace architecture/workspace.dsl
+            -workspace /usr/local/structurizr/architecture/workspace.dsl
 
   build:
     name: Build static architecture site
@@ -59,14 +59,14 @@ jobs:
             -v "${{ github.workspace }}:/usr/local/structurizr" \
             structurizr/cli:latest \
             export \
-            -workspace architecture/workspace.dsl \
+            -workspace /usr/local/structurizr/architecture/workspace.dsl \
             -format static \
-            -output site
+            -output /usr/local/structurizr/site
 
       - name: Show generated files
         run: |
           echo "Generated files:"
-          find site -maxdepth 3 -type f -print
+          find site -maxdepth 4 -type f -print
           echo "Site directory:"
           ls -la site
 
