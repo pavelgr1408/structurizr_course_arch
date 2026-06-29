@@ -1,0 +1,1 @@
+# structurizr_course_arch
