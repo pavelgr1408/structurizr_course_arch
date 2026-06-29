@@ -1,63 +1,53 @@
-workspace "Microservices Architecture Course" "Учебная архитектура микросервисной системы" {
+workspace "Name" "Description" {
+
+    !identifiers hierarchical
 
     model {
-        user = person "Пользователь" "Клиент системы"
-
-        softwareSystem = softwareSystem "Учебная микросервисная система" "Система для практики микросервисной архитектуры" {
-            web = container "Web Application" "Пользовательский интерфейс" "React / TypeScript"
-            apiGateway = container "API Gateway" "Единая входная точка для клиентских запросов" "Spring Cloud Gateway"
-            orderService = container "Order Service" "Управляет заказами" "Java / Spring Boot"
-            paymentService = container "Payment Service" "Обрабатывает платежи" "Java / Spring Boot"
-            notificationService = container "Notification Service" "Отправляет уведомления" "Java / Spring Boot"
-            orderDatabase = container "Order Database" "Хранит данные заказов" "PostgreSQL"
-            messageBroker = container "Message Broker" "Асинхронный обмен событиями" "RabbitMQ"
+        u = person "User"
+        ss = softwareSystem "Software System" {
+            wa = container "Web Application"
+            db = container "Database Schema" {
+                tags "Database"
+            }
         }
 
-        user -> web "Работает с системой через браузер"
-        web -> apiGateway "Вызывает API"
-        apiGateway -> orderService "Передаёт запросы по заказам"
-        orderService -> orderDatabase "Читает и пишет данные заказов"
-        orderService -> paymentService "Запрашивает оплату"
-        orderService -> messageBroker "Публикует событие OrderCreated"
-        paymentService -> messageBroker "Публикует событие PaymentCompleted"
-        notificationService -> messageBroker "Подписывается на события"
+        u -> ss.wa "Uses"
+        ss.wa -> ss.db "Reads from and writes to"
     }
 
     views {
-        systemContext softwareSystem "SystemContext" {
+        systemContext ss "Diagram1" {
             include *
-            autoLayout
         }
 
-        container softwareSystem "Containers" {
+        container ss "Diagram2" {
             include *
-            autoLayout
         }
 
         styles {
+            element "Element" {
+                color #f8289c
+                stroke #f8289c
+                strokeWidth 7
+                shape roundedbox
+            }
             element "Person" {
                 shape person
-                background #08427b
-                color #ffffff
             }
-
-            element "Software System" {
-                background #1168bd
-                color #ffffff
-            }
-
-            element "Container" {
-                background #438dd5
-                color #ffffff
-            }
-
             element "Database" {
                 shape cylinder
-                background #438dd5
-                color #ffffff
+            }
+            element "Boundary" {
+                strokeWidth 5
+            }
+            relationship "Relationship" {
+                thickness 4
             }
         }
-
-        theme default
     }
+
+    configuration {
+        scope softwaresystem
+    }
+
 }
