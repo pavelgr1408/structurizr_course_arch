@@ -38,7 +38,7 @@ jobs:
         run: |
           docker run --rm \
             -v "${{ github.workspace }}:/usr/local/structurizr" \
-            structurizr/cli:latest \
+            structurizr/structurizr:latest \
             validate \
             -workspace /usr/local/structurizr/architecture/workspace.dsl
 
@@ -58,7 +58,7 @@ jobs:
 
           docker run --rm \
             -v "${{ github.workspace }}:/usr/local/structurizr" \
-            structurizr/cli:latest \
+            structurizr/structurizr:latest \
             export \
             -workspace /usr/local/structurizr/architecture/workspace.dsl \
             -format static \
