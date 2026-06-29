@@ -63,6 +63,17 @@ jobs:
             -format static \
             -output site
 
+      - name: Show generated files
+        run: |
+          echo "Generated files:"
+          find site -maxdepth 3 -type f -print
+          echo "Site directory:"
+          ls -la site
+
+      - name: Verify index.html exists
+        run: |
+          test -f site/index.html
+
       - name: Upload GitHub Pages artifact
         uses: actions/upload-pages-artifact@v5
         with:
